@@ -14,7 +14,8 @@ def direct():
     """
      ---
     post:
-      description: Returns the compressed/hashed URL.
+      summary: "This is the main function to compress the url"
+      description: Use this POST route by giving a JSON input as showin in the example.
       parameters:
         - name: url
           in: body
@@ -41,14 +42,14 @@ def direct():
 
     """
 
-
+# Parse the JSON.
     dat= flask.request.get_json()
     url = dat['url']
     assert len(url.split('\\'))==1
-
+# Get the hash.
     hash_url=get_hash(url)
     checking=dac.find_one({"short_url":hash_url})
-
+# Check for existence and insert as required.
     if checking is None:
         dac.insert_one({"org_url":url,"short_url":hash_url,"created_at":datetime.datetime.utcnow()})
         return flask.jsonify({"short_url":hash_url})
@@ -67,7 +68,8 @@ def redirect(shorturl):
     """
      ---
     get:
-      description: Returns the compressed/hashed URL.
+      summary: "This is the main function to redirect the url"
+      description: Redirects to the original URL. GET route.
       parameters:
         - name: url
           in: path
@@ -93,14 +95,14 @@ def redirect(shorturl):
             description: The URL given is not found.     
     """
 
-
+# Find the hashed URL.
     shorturl=SECURITY+RUNNINGDOMAIN+":"+str(RUNNINGPORT)+"/"+shorturl
     checking=dac.find_one({"short_url":shorturl})
 
     if checking is None:
         return "<h1>URL not found :<h1/>",404
     else:
-        # Return to url checking["org_url"]
+# Redirect as per the URL.
         return flask.redirect(checking['org_url'])
         
 docs.register(target=redirect)
