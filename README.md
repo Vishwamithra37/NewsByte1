@@ -13,7 +13,7 @@ The Swagger/api documentation can be obtained at /swagger-ui.
 # Note:
 The code is written in Python 3.9.
 Gunicorn has not been used for deployment. But can be added. The dbconfig.py file is used to manage the database while config.py is used to manage the application(This includes the ports and host it is running upon).
-Run the Mains.py file to start the application. Assuming the requirements are installed.
+Run the Mains.py file to start the application. Assuming the requirements are installed. Certificates for production can be installed when gunicorn is used and this code is deployed.
 
 # Run command:
 python3.9 Mains.py
