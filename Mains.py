@@ -109,4 +109,4 @@ docs.register(target=redirect)
 
 
 if __name__ == '__main__':
-    app.run(host=RUNNINGDOMAIN,port=RUNNINGPORT)
+    app.run(host=RUNNINGDOMAIN,port=RUNNINGPORT,debug=True)
