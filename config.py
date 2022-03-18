@@ -21,3 +21,4 @@ app.config.update({
     'APISPEC_SWAGGER_URL': '/swagger/',
 })
 docs = FlaskApiSpec(app)
+RUNNINGDOMAIN="localhost"

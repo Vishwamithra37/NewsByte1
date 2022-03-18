@@ -1,27 +1,21 @@
 from traceback import print_tb
 from config import *
+from dbconfig import *
 
-
-#############################Initialized variables############################
-utm_array=["utm_source","utm_medium","utm_campaign","utm_term","utm_content"]
-#############################Initialized variables#############################
-
-@app.route('/index')
+@app.route('/compressor',methods=['POST'])
 def index():
-    # Get all args in the url.
-    args = flask.request.args.to_dict()
-    # Get the url.
-    url = flask.request.url
-    # Get the host part of the url.
-    host = flask.request.host
-    print(host)
-    print(args)
-    for i in utm_array:
-        print(flask.request.args.get(i))
-        
-    return "Hello World!"+"<br>"+url    
+    dat= flask.request.get_json()
+    url = dat['url']
+    assert len(url.split('\\'))==1
+    
+
+
+
+
+
+    return "<h1>Welcome to NewsBytes_VishwaMithra</h1><br><br><h2>Please visit "+url
 docs.register(target=index)
 
 
 if __name__ == '__main__':
-    app.run(host="localhost",debug=True)
+    app.run(host=RUNNINGDOMAIN,debug=True)
