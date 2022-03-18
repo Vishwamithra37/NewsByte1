@@ -8,7 +8,7 @@ import flask
 RUNNINGDOMAIN="localhost"
 SECURITY="http://"
 RUNNINGPORT=5000
-URL_LIFETIME=60*60*24*8 # 1 week. Change this according to your needs.
+URL_LIFETIME=60*60*24*7 # 1 week. Change this according to your needs.
 #######################################Edit these variables as per your needs############################################
 
 
@@ -23,7 +23,7 @@ app.config.update({
         openapi_version='3.0.2',
         info={
             'description': 'This is NewBytes_VishwaMithra',
-            'contact': { 'name': 'Vishwa Mithra', 'email': 'mithravishwa37@gmail.com',"mobile":"+91-9888888888" },
+            'contact': { 'name': 'Vishwa Mithra', 'email': 'mithravishwa37@gmail.com',"mobile":"+91-8297306303" },
             'license': { 'name': 'MIT'}
         }
     ),
