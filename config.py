@@ -4,6 +4,15 @@ from apispec import APISpec
 from flask_apispec import FlaskApiSpec
 import flask
 
+#######################################Edit these variables as per your needs############################################
+RUNNINGDOMAIN="localhost"
+SECURITY="http://"
+RUNNINGPORT=5000
+URL_LIFETIME=60*60*24*7 # 1 week. Change this according to your needs.
+#######################################Edit these variables as per your needs############################################
+
+
+#######################################Do not edit anything below##########################################################
 app = flask.Flask(__name__)
 app.app_context().push()
 app.config.update({
@@ -21,4 +30,4 @@ app.config.update({
     'APISPEC_SWAGGER_URL': '/swagger/',
 })
 docs = FlaskApiSpec(app)
-RUNNINGDOMAIN="localhost"
+#######################################Do not edit anything above##########################################################
