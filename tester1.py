@@ -1,6 +1,13 @@
 from config import *
 from dbconfig import *
 import hashlib
+import time
+import datetime
+# Get ISODateTime
+
+def get_ISODateTime():
+    ISODateTime=time.time()
+    return ISODateTime
 
 
 def get_hash(input_string,trunc_length=6):
@@ -15,28 +22,29 @@ def direct():
     assert len(url.split('\\'))==1
 
     hash_url=get_hash(url)
-
     checking=dac.find_one({"short_url":hash_url})
-    if checking["org_url"]==url:
-        hash_url=get_hash(url,trunc_length=5)
-        
     if checking is None:
-        dac.insert_one({"org_url":url,"short_url":hash_url,"TTL":URL_LIFETIME})
+        dac.insert_one({"org_url":url,"short_url":hash_url,"created_at":datetime.datetime.utcnow()})
         return flask.jsonify({"short_url":hash_url})
-    else:
-        return flask.jsonify({"short_url":checking['short_url']})    
+    elif checking["org_url"]!=url:
+                    hash_url=get_hash(url,trunc_length=5)
+                    dac.insert_one({"org_url":url,"short_url":hash_url,"created_at":datetime.datetime.utcnow()})
+                    return flask.jsonify({"short_url":hash_url})
+    return flask.jsonify({"short_url":checking['short_url']})    
 
 docs.register(target=direct)
 
 @app.route('/<shorturl>',methods=['GET'])
 def redirect(shorturl):
+    shorturl=SECURITY+RUNNINGDOMAIN+":"+str(RUNNINGPORT)+"/"+shorturl
+    print(shorturl)
     checking=dac.find_one({"short_url":shorturl})
     if checking is None:
         return "<h1>URL not found :<h1/>",404
     else:
+        # Return to url checking["org_url"]
         return flask.redirect(checking['org_url'])
-
-
+docs.register(target=redirect)
 
 
 if __name__ == '__main__':

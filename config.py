@@ -8,7 +8,7 @@ import flask
 RUNNINGDOMAIN="localhost"
 SECURITY="http://"
 RUNNINGPORT=5000
-URL_LIFETIME=60*60*24*7 # 1 week. Change this according to your needs.
+URL_LIFETIME=60*60*24*8 # 1 week. Change this according to your needs.
 #######################################Edit these variables as per your needs############################################
 
 
