@@ -8,10 +8,16 @@ def index():
     dat= flask.request.get_json()
     url = dat['url']
     assert len(url.split('\\'))==1
-    hashurl=hashlib.sha224(url.encode('utf-8')).hexdigest()
-    hashurl=hashurl[:6] # truncate to 6 chars.
 
-    return "<h1>Welcome to NewsBytes_VishwaMithra</h1><br><br><h2>Please visit "+url
+    hashurl=hashlib.sha224(url.encode('utf-8')).hexdigest()
+    hashurl=RUNNINGDOMAIN+'/'+hashurl[:6] # truncate to 6 chars
+    checking=dac.find_one({"org_url":url})
+
+    if checking is None:
+        dac.insert_one({"org_url":url,"short_url":hashurl})
+        return flask.jsonify({"short_url":hashurl})
+    else:
+        return flask.jsonify({"short_url":checking['short_url']})    
 docs.register(target=index)
 
 
